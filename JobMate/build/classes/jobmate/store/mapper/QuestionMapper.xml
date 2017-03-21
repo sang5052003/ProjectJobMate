@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jobmate.store.mapper.QuestionMapper">
+ 
+ 
+<resultMap type="Question" id="questionMap">
+	<id column="QUESTION_NO" property="questionNo"/>
+	<result column="CUSTOMER_ID" property="customerID"/>
+	<result column="CATEGORY" property="category"/> <!-- enum조심 -->
+	<result column="QUESTION" property="question"/>
+	<result column="SCRAP_COUNT" property="scrapCount"/>
+	
+	<collection property="replys" column="QUESTION_NO" ofType="Reply"
+			select="jobmate.store.mapper.ReplyMapper.readAll"
+			javaType="Arraylist" jdbcType="NUMERIC"
+		/>
+
+</resultMap>
+
+	<sql id="readQuestion">
+  		SELECT QUESTION_NO, CUSTOMER_ID, CATEGORY, QUESTION, SCRAP_COUNT
+  		FROM QUESTION_TB
+  	</sql>
+ 
+ 	<select id="readAll" resultMap="questionMap">
+  		<include refid="readQuestion"/>
+  		ORDER BY SCRAP_COUNT DESC
+  	</select>
+  	
+  	<insert id="insert" parameterType="Question">
+  		INSERT INTO question_tb (QUESTION_NO, CUSTOMER_ID, CATEGORY, QUESTION, SCRAP_COUNT)
+		VALUES(SEQ_QUESTION_NO.nextval, #{customerID}, #{category}, #{question}, #{scrapCount})
+  	</insert>
+  	
+  	<select id="readByQuestionNo" parameterType="int" resultMap="questionMap">
+  		<include refid="readQuestion"/>
+  		WHERE QUESTION_NO = #{questionNo}
+  		ORDER BY SCRAP_COUNT DESC
+  	</select>
+  	
+  	<select id="readByContent" parameterType="string" resultMap="questionMap">
+  		<include refid="readQuestion"/>
+  		<bind name="pattern" value="'%' + _parameter + '%'"></bind> 
+  		WHERE QUESTION like #{pattern}
+  		<!-- 아래코드로 해도되지만 safety를 위해 바인드 사용 -->
+  		<!-- WHERE QUESTION like '%${value}%' -->
+  		ORDER BY SCRAP_COUNT DESC
+  	</select>
+  	
+  	<delete id="delete" parameterType="int">
+  		DELETE
+		FROM question_tb
+		WHERE QUESTION_NO = #{questionNo}
+  	</delete>
+  	
+  	<!-- public boolean delete(int questionNo) -->
+  	
+  	<select id="readByInterview" parameterType="map" resultMap="questionMap">
+  		<include refid="readQuestion"/>
+  		WHERE CATEGORY = #{category}
+		AND CUSTOMER_ID = #{admin} <!-- 관리자id로 where절 추가 -->
+  	</select>
+
+</mapper>

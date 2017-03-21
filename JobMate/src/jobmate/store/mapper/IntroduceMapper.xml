@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jobmate.store.mapper.IntroduceMapper">
+
+	<resultMap type="Introduce" id="introduceMap">
+		<result column="introduce_no" property="introduceNo" />
+		<result column="category" property="category" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+	</resultMap>
+
+
+
+	<insert id="insert" parameterType="Customer">
+		INSERT INTO introduce_tb (introduce_no, category, title, content, customer_ID)
+		VALUES (#{introduceNo}, #{category}, #{title}, #{content}, #{customerID})
+	</insert>
+
+
+
+
+
+
+
+
+</mapper>

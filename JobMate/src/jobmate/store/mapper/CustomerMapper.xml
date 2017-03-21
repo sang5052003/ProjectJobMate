@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jobmate.store.mapper.CustomerMapper">
+
+	<resultMap type="Customer" id="customerMap">
+		<result column="customer_id" property="customerID" />
+		<result column="name" property="name" />
+		<result column="password" property="password" />
+	</resultMap>
+
+
+	<insert id="insert" parameterType="Customer">
+		INSERT INTO customer_tb (customer_id, name, password)
+		VALUES (#{customerID}, #{name}, #{password})
+	</insert>
+
+	<select id="readByID" parameterType="String" resultMap="customerMap">
+		SELECT customer_id, name, password
+		FROM customer_tb
+		WHERE customer_id = #{customerID}
+	</select>
+
+	<delete id="delete" parameterType="String">
+		DELETE customer_tb
+		WHERE customer_id = #{customerID}
+	</delete>
+
+	<update id="update" parameterType="Customer">
+		UPDATE customer_tb
+		SET customer_id = #{customerID}, name = #{name}, password = #{password}
+		WHERE customer_id = #{customerID}
+	</update>
+
+
+
+</mapper>
