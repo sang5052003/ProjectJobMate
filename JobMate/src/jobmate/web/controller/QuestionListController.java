@@ -38,7 +38,7 @@ public class QuestionListController extends HttpServlet {
 		//
 		// 넘겨준 페이지번호, 넘겨줄때-- 해서 옴
 		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		int pagePerCount = 5; // 기본 5페이지씩 보여준다 라고 치고
+		int pagePerCount = 5; // 기본 5개씩 페이지당 보여준다 라고 치고
 		int startPage = pageNum * pagePerCount; // 몇페이지를 선택했는가..
 		for (int i = startPage; i < pagePerCount + startPage; i++) {
 			
@@ -73,7 +73,7 @@ public class QuestionListController extends HttpServlet {
 		if (session != null) {
 			request.setAttribute("loginUser", session.getAttribute("loginUser"));
 		}
-		// 테스트
+		// 테스트 삭제 요망, 나중에는 로그인한 세션정보로 할 것이므로..
 		Customer loginUser = new Customer();
 		loginUser.setCustomerID("kim");
 		request.setAttribute("loginUser", loginUser);

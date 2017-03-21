@@ -134,12 +134,15 @@
           <div class="col-md-12">
             <div>
             
-              <button>&lt;</button>
+              <!-- <button>&lt;</button> -->
+              <a class="btn btn-xs btn-info btnPlay" href="${ctx }/question/list.do?pageNum=${sts.count }">&lt;</a><!-- do로 넘겨줌 pageNum -->
               <button>1</button> <!-- 무조건 있는 1페이지 -->
               <c:forEach items="${sizeList }" var="element" varStatus="sts">
-              	<button>${sts.count + 1 }</button> <!-- do로 넘겨줌 pageNum -->
+                <a class="btn btn-xs btn-info btnPlay" href="${ctx }/question/list.do?pageNum=${sts.count }">${sts.count + 1 }</a><!-- do로 넘겨줌 pageNum -->
+              	<%-- <input type="button">${sts.count + 1 }</button> --%> 
               </c:forEach>
-              <button>&gt;</button>
+              <a class="btn btn-xs btn-info btnPlay" href="${ctx }/question/list.do?pageNum=${sts.count }">&gt;</a><!-- do로 넘겨줌 pageNum -->
+				<!-- <button>&gt;</button> -->
               
             </div>
           </div>
