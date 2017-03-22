@@ -39,7 +39,7 @@
 			SELECT seq_reply_no.nextval from dual
 		</selectKey>
 		INSERT INTO reply_tb (REPLY_NO, CONTENT, QUESTION_NO, CUSTOMER_ID)
-		VALUES(#{replyNo},#{content},#{questionNo},#{customerID})
+		VALUES(#{replyNo},#{content},#{question.questionNo},#{customerID})
 	</insert>
 
 	<update id="update" parameterType="Reply">

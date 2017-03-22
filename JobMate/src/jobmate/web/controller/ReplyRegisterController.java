@@ -20,23 +20,28 @@ public class ReplyRegisterController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		ReplyService service = new ReplyServiceLogic();
+		QuestionService questionService = new QuestionServiceLogic();
+
+		int questionNo = Integer.parseInt(request.getParameter("questionNo"));
 
 		String content = request.getParameter("name");
-		System.out.println("aa");
-		Reply reply = new Reply();
-		reply.setContent(content);
-		reply.setCustomerID("갓기"); //세션에서 아이디를 가져옴
-		Question question = new Question();
-		question.setQuestionNo(1);
-		reply.setQuestion(question); // 질문을 파라미터로 받아서 넣어줌
 
-		service.create(reply);
-//		if(service.create(reply)){ // 성공하면 실패하면 
-			response.sendRedirect(request.getContextPath() +"/question/detail.do");
-//		}
-		
+		if (content != "") {
+			System.out.println(questionNo);
+			System.out.println(content);
+			Reply reply = new Reply();
+			reply.setContent(content);
+			reply.setCustomerID("갓기"); // 세션에서 아이디를 가져옴
+
+			Question question = questionService.findByQuestionNo(questionNo); // 넘버로
+
+			reply.setQuestion(question); // 질문을 파라미터로 받아서 넣어줌
+			service.create(reply);
+
+		}
+		response.sendRedirect(request.getContextPath() + "/question/detail.do?questionNo=" + questionNo); // 디테일
 
 	}
 

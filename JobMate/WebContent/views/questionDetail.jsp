@@ -19,6 +19,16 @@
 <link
 	href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
 	rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+function cmUpdateOpen(comment_num){
+	window.name = "parentForm";
+	window.open("reply/update.do?num="+comment_num,
+	
+			"updateForm", "width=570, height=350, resizable = no, scrollbars = no");
+}
+</script>
+
 </head>
 
 <body>
@@ -52,11 +62,12 @@
 						<div class="form-group">
 							<div class="input-group input-group-lg">
 								<input type="text" class="form-control" name=name
-									placeholder="내용을 입력해 주세요">
+									placeholder="내용을 입력해 주세요" value="">
 							</div>
 						</div>
 					</div>
-
+					<input type="hidden" name="questionNo"
+						value="${question.questionNo}" />
 					<div class="col-md-1">
 						<input class="btn btn-lg btn-primary" type="submit" value="댓글입력">
 					</div>
@@ -79,14 +90,22 @@
 							</tr>
 						</thead>
 						<tbody>
+
 							<c:forEach items="${question.replys}" var="reply"
 								varStatus="status">
 								<tr>
 									<td>${status.count }</td>
 									<td>${reply.content }</td>
 									<td>${reply.customerID }</td>
+									<c:if test="${loginUser eq reply.customerID}">
+										<td><a
+											href="${ctx}/reply/delete.do?replyNo=${reply.replyNo}&questionNo=${question.questionNo}">삭제</a></td>
+										<td><a href="#" onclick="cmUpdateOpen(${reply.replyNo})">수정</a></td>
+									</c:if>
+
 								</tr>
 							</c:forEach>
+
 						</tbody>
 					</table>
 				</div>

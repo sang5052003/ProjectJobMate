@@ -81,12 +81,12 @@
 			<div class="login-modal">
 				<h1>로그인</h1>
 				<h2>아이디,비밀번호를 입력해주세요.</h2>
-				<form>
+				<form action="${ctx}/login.do" method="post">
 					<div class="group">
-						<input type="text" required></span><span class="bar"></span> <label>ID</label>
+						<input type="text" required="required" name ="customerID"></span><span class="bar"></span> <label>ID</label>
 					</div>
 					<div class="group">
-						<input type="password" required></span><span class="bar"></span>
+						<input type="password" required="required"></span><span class="bar"></span>
 						<label>Password</label>
 					</div>
 					<button type="submit" class="button buttonBlue">
