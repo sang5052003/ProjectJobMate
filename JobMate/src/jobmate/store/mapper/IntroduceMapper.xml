@@ -28,9 +28,10 @@
 	FROM introduce_tb
 	
 	</sql>
-	<select id="readAllByCustomerID" parameterType="Customer" resultMap="introduceMap">
+	<select id="readAllByCustomerID" parameterType="String" resultMap="introduceMap">
 	<include refid="selectIntroduce"/>
-	WHERE customer_id=#{customer.customerID}
+	WHERE customer_id=#{customer.customerID, jdbcType=VARCHAR} <!--부적합한 열 유형 jdbcType지정해야함-->
+	ORDER BY introduce_no
 	</select>
 	
 	<select id="readByTitle" parameterType="map" resultMap="introduceMap">
@@ -38,14 +39,14 @@
 	WHERE title LIKE '%${title}%'
 	</select>
 	
-	<select id="readByContent" parameterType="String" resultMap="introduceMap">
+	<select id="readByIntroduceContent" parameterType="String" resultMap="introduceMap"><!-- id가 readBycontent였는데 question에서 같은 아이디를 써서 바꿈 -->
 	<include refid="selectIntroduce"/>
 	WHERE content LIKE '%${content}%'
 	</select>
 	
 	<update id="update" parameterType="Introduce">
 	UPDATE introduce_tb
-	SET category=#{category}, title=#{title}, content=#{content}
+	SET category=#{category}, title=#{title,jdbcType=VARCHAR}, content=#{content}
 	WHERE introduce_no=#{introduceNo}
 	</update>
 	
@@ -61,12 +62,12 @@
 	
 	</select>
 
-	<insert id="insert" parameterType="Customer">
+	<insert id="insert" parameterType="Introduce">
 	<selectKey keyProperty="introduceNo" resultType="int" order="BEFORE"> 
 		SELECT seq_introduce_no.nextval FROM DUAL
 	</selectKey>
 		INSERT INTO introduce_tb (introduce_no, category, title, content, customer_ID)
-		VALUES (#{introduceNo}, #{category}, #{title}, #{content}, #{customer.customerID})
+		VALUES (#{introduceNo}, #{category}, #{title,jdbcType=VARCHAR}, #{content}, #{customer.customerID})
 	</insert>
 	
 	<select id="readAllSpec" parameterType="String" resultMap="introduceMap">

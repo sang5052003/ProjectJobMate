@@ -33,7 +33,7 @@ public class IntroduceServiceLogic implements IntroduceService {
 
 	@Override
 	public List<Introduce> findByContent(String customerID, String content) {
-		return store.readByContent(customerID, content);
+		return store.readByIntroduceContent(customerID, content);
 	}
 
 	@Override

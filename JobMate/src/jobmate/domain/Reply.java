@@ -4,14 +4,13 @@ public class Reply {
 	private int replyNo;
 	private String content;
 	private String customerID;
-	private Question question;
+	private int questionNo;
 	
-	public Question getQuestion() {
-		return question;
+	public int getQuestionNo() {
+		return questionNo;
 	}
-
-	public void setQuestion(Question question) {
-		this.question = question;
+	public void setQuestionNo(int questionNo) {
+		this.questionNo = questionNo;
 	}
 	public int getReplyNo() {
 		return replyNo;

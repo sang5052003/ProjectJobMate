@@ -71,7 +71,7 @@ public class IntroduceStoreLogic implements IntroduceStore {
 	}
 
 	@Override
-	public List<Introduce> readByContent(String customerID, String content) {
+	public List<Introduce> readByIntroduceContent(String customerID, String content) {
 		SqlSession session = factory.openSession();
 		List<Introduce> list =null;
 		HashMap<String, String> map = new HashMap<>();
@@ -79,7 +79,7 @@ public class IntroduceStoreLogic implements IntroduceStore {
 		map.put("content", content);
 		
 		try{
-		list=session.selectList("readByContent", map);
+		list=session.selectList("readByIntroduceContent", map);
 		}finally{
 			session.close();
 		}
