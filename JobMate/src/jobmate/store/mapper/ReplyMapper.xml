@@ -10,9 +10,9 @@
 	<id column="REPLY_NO" property="replyNo"/>
 	<result column="CONTENT" property="content"/>
 	<result column="CUSTOMER_ID" property="customerID"/> <!-- enum조심 -->
-	<association property="questionNo" column="question_No"
-		select="jobmate.store.mapper.QuestionMapper.readByQuestionNo"
-		javaType ="int" jdbcType ="NUMERIC"/>
+<!-- 	<association property="questionNo" column="question_No" -->
+<!-- 		select="jobmate.store.mapper.QuestionMapper.readByQuestionNo" -->
+<!-- 		javaType ="int" jdbcType ="NUMERIC"/> -->
 	
 <!-- 도메인에  QUESTION_NO에 대응되는 변수가 없어서 필요 없을 듯-->
 	<!-- <association property="" column="QUESTION_NO"

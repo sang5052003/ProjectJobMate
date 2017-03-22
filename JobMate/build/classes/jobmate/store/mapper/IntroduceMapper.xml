@@ -7,17 +7,77 @@
 
 	<resultMap type="Introduce" id="introduceMap">
 		<result column="introduce_no" property="introduceNo" />
-		<result column="category" property="category" />
+		<result column="category" property="category" javaType="IntroduceCategory" jdbcType="VARCHAR"/>
 		<result column="title" property="title" />
 		<result column="content" property="content" />
+		<result column="customer_ID" property="customer.customerID"/>
 	</resultMap>
+	
+	<parameterMap type="Introduce" id="introducePMap">
+		<parameter property="introduceNo"/>
+		<parameter property="category" javaType="IntroduceCategory" jdbcType="VARCHAR" />
+		<parameter property="title"/>
+		<parameter property="content"/>
 
-
+		
+	</parameterMap>
+	
+	
+	<sql id="selectIntroduce">
+	SELECT introduce_no, category, title, content, customer_id
+	FROM introduce_tb
+	
+	</sql>
+	<select id="readAllByCustomerID" parameterType="Customer" resultMap="introduceMap">
+	<include refid="selectIntroduce"/>
+	WHERE customer_id=#{customer.customerID}
+	</select>
+	
+	<select id="readByTitle" parameterType="map" resultMap="introduceMap">
+	<include refid="selectIntroduce"/>
+	WHERE title LIKE '%${title}%'
+	</select>
+	
+	<select id="readByContent" parameterType="String" resultMap="introduceMap">
+	<include refid="selectIntroduce"/>
+	WHERE content LIKE '%${content}%'
+	</select>
+	
+	<update id="update" parameterType="Introduce">
+	UPDATE introduce_tb
+	SET category=#{category}, title=#{title}, content=#{content}
+	WHERE introduce_no=#{introduceNo}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+	DELETE FROM introduce_tb
+	WHERE introduce_no=#{introduce_no}
+	
+	</delete>
+	
+	<select id="readByIntroduceNo" parameterType="int" resultMap="introduceMap">
+	<include refid="selectIntroduce"/>
+	WHERE introduce_no=#{introduceNo} 
+	
+	</select>
 
 	<insert id="insert" parameterType="Customer">
+	<selectKey keyProperty="introduceNo" resultType="int" order="BEFORE"> 
+		SELECT seq_introduce_no.nextval FROM DUAL
+	</selectKey>
 		INSERT INTO introduce_tb (introduce_no, category, title, content, customer_ID)
-		VALUES (#{introduceNo}, #{category}, #{title}, #{content}, #{customerID})
+		VALUES (#{introduceNo}, #{category}, #{title}, #{content}, #{customer.customerID})
 	</insert>
+	
+	<select id="readAllSpec" parameterType="String" resultMap="introduceMap">
+	<include refid="selectIntroduce"/>
+	WHERE category='pros'
+	OR category = 'cons'
+	OR category='speciality'
+	OR category='aspiration'
+	OR category='motto'
+
+	</select>
 
 
 
