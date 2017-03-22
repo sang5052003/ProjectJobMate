@@ -35,33 +35,41 @@ public class QuestionListController extends HttpServlet {
 		// 뽑아온 질문중 한페이지에 몇개 씩 보여줄지 리스트에서 뽑는다
 		List<Question> list = new ArrayList<>();
 
-		//
-		// 넘겨준 페이지번호, 넘겨줄때-- 해서 옴
-		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		//페이지만들어서 뿌리기(밑에 번호..)
 		int pagePerCount = 5; // 기본 5개씩 페이지당 보여준다 라고 치고
-		int startPage = pageNum * pagePerCount; // 몇페이지를 선택했는가..
-		for (int i = startPage; i < pagePerCount + startPage; i++) {
-			
-			//outofbounds처리
-			if(listAll.size() == 0){
-				break;
-			}
-			
-			list.add(listAll.get(i));
-			
-			//outofbounds처리
-			listAll.remove(listAll.get(i));
-		}
-
-		////페이지만들어서 뿌리기(밑에 번호..)
 		size /= pagePerCount;
-		// if(size % 5 != 0){ //한페이지 더
-		// size++;
-		// }
 		List<Integer> sizeList = new ArrayList<>(size); // 비효율 지리네
 		for (int i = 0; i < size; i++) {
 			sizeList.add(i);
 		}
+	
+		//
+		// 넘겨준 페이지번호, 넘겨줄때-- 해서 옴
+		String pageNumStr = request.getParameter("pageNum");
+		int pageNum = 0;
+		if(pageNumStr != null){
+			pageNum = Integer.parseInt(pageNumStr);
+			if(pageNum < 0){
+				pageNum = 0;
+			}else if(pageNum > size){
+				pageNum = size;
+			}
+		}
+		request.setAttribute("curPageNum", pageNum); //넘겨줄 현재 페이지 번호
+		
+		
+		int startPage = pageNum * pagePerCount; // 몇페이지를 선택했는가..
+		for (int i = startPage; i < pagePerCount + startPage; i++) {
+			
+			//outofbounds처리
+			if(listAll.size() == i){
+				break;
+			}
+			
+			list.add(listAll.get(i));
+		}
+
+		
 		request.setAttribute("sizeList", sizeList); // 몇개의 숫자를 보여줄지(몇페이지까지..)
 
 		// 실제 한페이지에 뿌려질 리스트
