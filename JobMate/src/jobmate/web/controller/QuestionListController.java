@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jobmate.common.utill.QuestionPageManager;
 import jobmate.domain.Customer;
 import jobmate.domain.Question;
 import jobmate.service.QuestionService;
@@ -28,6 +29,42 @@ public class QuestionListController extends HttpServlet {
 		// 일단 모든 질문을 뽑아오고
 		QuestionService service = new QuestionServiceLogic();
 		List<Question> listAll = service.findAll();
+		
+		this.setList(listAll, request, response);
+	}
+
+	// 면접질문 검색
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		//
+		QuestionService service = new QuestionServiceLogic();
+		
+		//search
+		String search = request.getParameter("search");
+		List<Question>listAll = service.findByContent(search);
+		
+		//카테고리별 검색 추가?
+		//selCategory
+		String category = request.getParameter("selCategory");
+		
+		//성능개구림
+		if(category.equals("both")){ //전체
+			this.setList(listAll, request, response);
+		}else{ //기술, 인성
+			List<Question>list = new ArrayList<>();
+			for(Question q : listAll){
+				if(q.getCategory().toString().equals(category)){
+					list.add(q);
+				}
+			}
+			
+			this.setList(list, request, response);
+		}
+	}
+	
+	private void setList(List<Question> listAll, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
 
 		// 페이지만들어서 뿌리기(밑에 번호..)
 		int size = listAll.size();
@@ -42,19 +79,21 @@ public class QuestionListController extends HttpServlet {
 		for (int i = 0; i < size; i++) {
 			sizeList.add(i);
 		}
-	
+		
 		//
 		// 넘겨준 페이지번호, 넘겨줄때-- 해서 옴
-		String pageNumStr = request.getParameter("pageNum");
-		int pageNum = 0;
-		if(pageNumStr != null){
+		String pageNumStr = request.getParameter("pageNum"); //목록아래의 숫자나 화살표 클릭 시
+		int pageNum = QuestionPageManager.getInstance().getCurPageNo(); //작성, 삭제 시 들어온다
+		if(pageNumStr != null){ //검색, 아래숫자, 최초뿌리기
 			pageNum = Integer.parseInt(pageNumStr);
+			QuestionPageManager.getInstance().setCurPageNo(pageNum);
 			if(pageNum < 0){
 				pageNum = 0;
 			}else if(pageNum > size){
 				pageNum = size;
 			}
 		}
+		
 		request.setAttribute("curPageNum", pageNum); //넘겨줄 현재 페이지 번호
 		
 		
@@ -83,17 +122,11 @@ public class QuestionListController extends HttpServlet {
 		}
 		// 테스트 삭제 요망, 나중에는 로그인한 세션정보로 할 것이므로..
 		Customer loginUser = new Customer();
-		loginUser.setCustomerID("kim");
+		loginUser.setCustomerID("갓기");
 		request.setAttribute("loginUser", loginUser);
 
 		//
 		request.getRequestDispatcher("/views/questionList.jsp").forward(request, response);
-	}
-
-	// 면접질문 검색
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
 	}
 
 }
