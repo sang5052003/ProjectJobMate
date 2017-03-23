@@ -10,5 +10,6 @@ public interface ReplyStore {
 	List<Reply> readAll(int questionNo);
 	boolean update(Reply reply);
 	boolean delete(int replyNo);
+	Reply readReply(int replyNo);
 
 }

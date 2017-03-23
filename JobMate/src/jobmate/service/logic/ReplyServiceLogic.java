@@ -28,4 +28,10 @@ public class ReplyServiceLogic implements ReplyService {
 		return store.delete(replyNo);
 	}
 
+	@Override
+	public Reply findReply(int replyNo) {
+
+		return store.readReply(replyNo);
+	}
+
 }

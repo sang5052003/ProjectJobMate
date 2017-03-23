@@ -27,7 +27,7 @@
 <link rel='stylesheet prefetch'
 	href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic'>
 
-<link rel="stylesheet" href="${ctx }/views/css/style2.css">
+<link rel="stylesheet" href="${ctx}/views/css/style2.css">
 
 
 
@@ -51,13 +51,13 @@
 			<!-- Navigation Links -->
 			<div class="collapse navbar-collapse" id="mainnav-navbar-collapse">
 				<ul class="nav navbar-nav navbar-default">
-					<li class="page-scroll"><a href="/recruit.html">채용관리</a></li>
+					<li class="page-scroll"><a href="${ctx}/views/recruitList.jsp">채용관리</a></li>
 					<li class="page-scroll"><a href="/introduce.html">자기소개서</a></li>
 					<li class="page-scroll"><a href="/spec.html">스펙공유</a></li>
-					<li class="page-scroll"><a href="${ctx }/question/list.do"><span
-							style="color: #9fe7ff">면접질문</span></a></li>
+					<li class="page-scroll"><a href="${ctx }/question/list.do">면접질문</a></li>
 					<li class="page-scroll"><a href="/interview.html">가상면접</a></li>
-					<li class="page-scroll"><a href="/myscrap.html">내 스크랩</a></li>
+					<li class="page-scroll"><a href="${ctx}/myScrap/myList.do">내
+							스크랩</a></li>
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -87,11 +87,12 @@
 				<h2>아이디,비밀번호를 입력해주세요.</h2>
 				<form>
 					<div class="group">
-						<input type="text" required></span><span class="bar"></span> <label>ID</label>
+						<input type="text" required="required" name="customerID"></span><span
+							class="bar"></span> <label>ID</label>
 					</div>
 					<div class="group">
-						<input type="password" required></span><span class="bar"></span>
-						<label>Password</label>
+						<input type="password" required="required" name="password"></span><span
+							class="bar"></span> <label>Password</label>
 					</div>
 					<button type="submit" class="button buttonBlue">
 						로그인
@@ -107,14 +108,15 @@
 			<div class="register-modal">
 				<h1>회원가입</h1>
 				<h2>아이디,비밀번호,이름 입력해주세요.</h2>
-				<form>
+				<form action="${ctx}/login.do" method="post">
 					<div class="group">
-						<input type="text" required></span><span class="bar"></span> <label>ID</label>
+						<input type="text" required="required" name="customerID"></span><span
+							class="bar"></span> <label>ID</label>
 					</div>
 
 					<div class="group">
-						<input type="password" required></span><span class="bar"></span>
-						<label>Password</label>
+						<input type="password" required="required" name="password"></span><span
+							class="bar"></span> <label>Password</label>
 					</div>
 					<div class="group">
 						<input type="password" required></span><span class="bar"></span>

@@ -116,14 +116,14 @@ public class QuestionListController extends HttpServlet {
 
 		// 자기질문 삭제 표시
 		// 즐겨찾기 표시
-		HttpSession session = request.getSession(false); // false세션정보 없으면 만들지 않음
-		if (session != null) {
-			request.setAttribute("loginUser", session.getAttribute("loginUser"));
-		}
-		// 테스트 삭제 요망, 나중에는 로그인한 세션정보로 할 것이므로..
-		Customer loginUser = new Customer();
-		loginUser.setCustomerID("갓기");
-		request.setAttribute("loginUser", loginUser);
+//		HttpSession session = request.getSession(false); // false세션정보 없으면 만들지 않음
+//		if (session != null) {
+//			request.setAttribute("loginUser", session.getAttribute("loginUser"));
+//		}
+//		// 테스트 삭제 요망, 나중에는 로그인한 세션정보로 할 것이므로..
+//		Customer loginUser = new Customer();
+//		loginUser.setCustomerID("갓기");
+//		request.setAttribute("loginUser", loginUser);
 
 		//
 		request.getRequestDispatcher("/views/questionList.jsp").forward(request, response);

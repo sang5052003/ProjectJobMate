@@ -19,90 +19,104 @@ public class ReplyStoreLogic implements ReplyStore {
 
 	@Override
 	public boolean insert(Reply reply) {
-		
+
 		SqlSession session = this.factory.openSession();
 		boolean status = false;
-		
-		try{
+
+		try {
 			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
-			status= mapper.insert(reply);
-			
-			if(status){
+			status = mapper.insert(reply);
+
+			if (status) {
 				session.commit();
-			}else{
+			} else {
 				session.rollback();
 			}
-		
-		}finally{
+
+		} finally {
 			session.close();
 		}
-		
+
 		return status;
 	}
 
 	@Override
 	public List<Reply> readAll(int questionNo) {
-		
+
 		SqlSession session = this.factory.openSession();
 		List<Reply> list = null;
-		
-		try{
+
+		try {
 			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
 			list = mapper.readAll(questionNo);
-		}finally{
+		} finally {
 			session.close();
 		}
-		
+
 		return list;
 	}
 
 	@Override
 	public boolean update(Reply reply) {
-		
+
 		SqlSession session = factory.openSession();
 		boolean status = false;
-		
-		try{
+
+		try {
 			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
-			status= mapper.update(reply);
-			
-			if(status){
+			status = mapper.update(reply);
+
+			if (status) {
 				session.commit();
-			}else{
+			} else {
 				session.rollback();
 			}
-		
-		}finally{
+
+		} finally {
 			session.close();
 		}
-		
+
 		return status;
-		
+
 	}
 
 	@Override
 	public boolean delete(int replyNo) {
-		
+
 		SqlSession session = factory.openSession();
 		boolean status = false;
-		
-		try{
+
+		try {
 			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
-			status= mapper.delete(replyNo);
-			
-			if(status){
+			status = mapper.delete(replyNo);
+
+			if (status) {
 				session.commit();
-			}else{
+			} else {
 				session.rollback();
 			}
-		
-		}finally{
+
+		} finally {
 			session.close();
 		}
-		
+
 		return status;
-		
-		
+
+	}
+
+	@Override
+	public Reply readReply(int replyNo) {
+		SqlSession session = this.factory.openSession();
+		Reply reply = null;
+
+		try {
+			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
+			reply = mapper.readReply(replyNo);
+		} finally {
+			session.close();
+		}
+
+		return reply;
 	}
 
 }

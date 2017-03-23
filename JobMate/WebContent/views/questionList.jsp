@@ -6,6 +6,7 @@
 <html>
 
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript"
@@ -18,13 +19,22 @@
 	href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
 	rel="stylesheet" type="text/css">
 
-
+<link rel="stylesheet" href="${ctx}/css/style.css">
 </head>
 
 <body>
 	<%@ include file="/header/header.jspf"%>
 
-	<br><br><br><br><br><br><br><br><br><br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<div class="section">
 		<div class="container">
 			<div class="row">
@@ -32,17 +42,16 @@
 					<form action="${ctx }/question/list.do" method="post">
 						<div class="form-group">
 							<div class="input-group">
-								<select
-									class="form-control" name="selCategory">
+								<select class="form-control" name="selCategory">
 									<option value="both">전체</option>
 									<option value="personality">인성면접</option>
 									<option value="technology">기술면접</option>
-								</select>
-								<input type="text" name="search" class="form-control" placeholder="검색어 입력">
-								<input type="hidden" name="pageNum" value="0"/> <!-- 검색시 첫번째 페이지 -->
-								<span class="input-group-btn"> <input class="btn btn-success"
-									type="submit" value="검색"/>
-
+								</select> <input type="text" name="search" class="form-control"
+									placeholder="검색어 입력"> <input type="hidden"
+									name="pageNum" value="0" />
+								<!-- 검색시 첫번째 페이지 -->
+								<span class="input-group-btn"> <input
+									class="btn btn-success" type="submit" value="검색" />
 								</span>
 							</div>
 						</div>
@@ -55,19 +64,19 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9">
-					<form role="form" action="${ctx }/question/register.do" method="post">
+					<form role="form" action="${ctx }/question/register.do"
+						method="post">
 						<div class="form-group">
 							<div class="input-group">
 								<select class="form-control" name="selCategory">
 									<option value="personality">인성면접</option>
 									<option value="technology">기술면접</option>
-								</select>
-								<input type="hidden" name="curPageNum" value="${curPageNum }"> <!-- 현재 페이지 기억 -->
-								 <input type="text" name="question" class="form-control"
+								</select> <input type="hidden" name="curPageNum" value="${curPageNum }">
+								<!-- 현재 페이지 기억 -->
+								<input type="text" name="question" class="form-control"
 									placeholder="내용을 입력해 주세요"> <span
-									class="input-group-btn"> <input class="btn btn-success" id="registerBtn"
-									type="submit" value="등록"/>
-
+									class="input-group-btn"> <input class="btn btn-success"
+									id="registerBtn" type="submit" value="등록" />
 								</span>
 							</div>
 						</div>
@@ -103,26 +112,31 @@
 									</c:choose>
 
 									<td>${sts.count }</td>
-
+									<td><a
+										href="${ctx}/question/detail.do?questionNo=${question.questionNo}">${question.category }</a></td>
 									<td>${question.question }</td>
 									<td>${question.customerID }</td>
+									
+									<c:if test="${loginUser eq question.customerID }">
+										<td><input type="button" value="삭제"
+											onClick="location.href='${ctx }/question/delete.do?questionNo=${question.questionNo }&curPageNum=${curPageNum }" />
+										</td>
+									</c:if>
 
-									<c:choose>
-										<c:when test="${loginUser.customerID eq question.customerID }">
-											<td>
-												<input type="button" value="삭제" onClick="location.href='${ctx }/question/delete.do?questionNo=${question.questionNo }&curPageNum=${curPageNum }'"/> <!-- 현재페이지 기억 -->
-
-											</td>
-										</c:when>
-										<c:when test="${loginUser.customerID eq loginUser.adminID }">
-											<td>
-												<input type="button" value="삭제" src="${ctx }/question/delete.do?questionNo=${question.questionNo }&curPageNum=${curPageNum }"/> <!-- 현재페이지 기억 -->
-
-											</td>
-										</c:when>
-										<c:otherwise>
-										</c:otherwise>
-									</c:choose>
+<%-- 									<c:choose> --%>
+<%-- 										<c:when test="${loginUser.customerID eq question.customerID }"> --%>
+<!-- 											<td><input type="button" value="삭제" -->
+<%-- 												onClick="location.href='${ctx }/question/delete.do?questionNo=${question.questionNo }&curPageNum=${curPageNum }'" /> --%>
+<!-- 												현재페이지 기억</td> -->
+<%-- 										</c:when> --%>
+<%-- 										<c:when test="${loginUser.customerID eq loginUser.adminID }"> --%>
+<!-- 											<td><input type="button" value="삭제" -->
+<%-- 												src="${ctx }/question/delete.do?questionNo=${question.questionNo }&curPageNum=${curPageNum }" /> --%>
+<!-- 												현재페이지 기억</td> -->
+<%-- 										</c:when> --%>
+<%-- 										<c:otherwise> --%>
+<%-- 										</c:otherwise> --%>
+<%-- 									</c:choose> --%>
 
 								</tr>
 							</c:forEach>
@@ -163,24 +177,22 @@
 			</div>
 		</div>
 	</div>
-	
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-		$("#registerBtn").click(function(){
-            if($("input[name='question']").val() == ""){
-//                 $("input[name='question']").css("border", "1px solid red").after("<span>내용을 입력해 주세요</span>");
-//                 $("span").css("color", "red").fadeOut(2000);
-                alert("글자를 입력해 주세요");
-                return false;
-            }
-            else{
-            }
-         });
-	});
-</script>
-	
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$("#registerBtn").click(function() {
+				if ($("input[name='question']").val() == "") {
+					//                 $("input[name='question']").css("border", "1px solid red").after("<span>내용을 입력해 주세요</span>");
+					//                 $("span").css("color", "red").fadeOut(2000);
+					alert("글자를 입력해 주세요");
+					return false;
+				} else {
+				}
+			});
+		});
+	</script>
 
 </body>
 

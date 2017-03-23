@@ -29,6 +29,8 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 		String customerID = request.getParameter("customerID");
 		String password = request.getParameter("password");
+		
+		System.out.println(customerID);
 
 		CustomerService service = new CustomerServiceLogic();
 		Customer customer = service.findByID(customerID);
@@ -37,7 +39,7 @@ public class LoginController extends HttpServlet {
 			HttpSession session = request.getSession(); // 세션은 설정 해줄 수 있음 타이머
 			session.setAttribute("loginUser", customerID);
 			System.out.println(customerID);
-			response.sendRedirect(request.getContextPath() + "/views/index.jsp"); // 메인화면으로
+			response.sendRedirect(request.getContextPath() + "/main.do"); // 메인화면으로
 
 		} else {
 			HttpSession session = request.getSession(false); //

@@ -8,14 +8,15 @@ import jobmate.store.logic.CustomerStoreLogic;
 public class CustomerServiceLogic implements CustomerService{
 	
 	private CustomerStore store;
-	
+
+
 	public CustomerServiceLogic() {
 		store = new CustomerStoreLogic();
 	}
-	
+
 	@Override
 	public boolean create(Customer customer) {
-		return false;
+		return store.insert(customer);
 	}
 
 	@Override
@@ -25,12 +26,12 @@ public class CustomerServiceLogic implements CustomerService{
 
 	@Override
 	public boolean remove(String customerID) {
-		return false;
+		return store.delete(customerID);
 	}
 
 	@Override
 	public boolean modify(Customer customer) {
-		return false;
+		return store.update(customer);
 	}
 
 }

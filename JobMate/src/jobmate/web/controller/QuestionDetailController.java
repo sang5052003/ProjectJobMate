@@ -1,15 +1,16 @@
 package jobmate.web.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import jobmate.domain.Question;
+import jobmate.domain.Reply;
 import jobmate.service.QuestionService;
 import jobmate.service.ReplyService;
 import jobmate.service.logic.QuestionServiceLogic;
@@ -29,10 +30,10 @@ public class QuestionDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int questionNo = Integer.parseInt(request.getParameter("questionNo"));// 질문번호
-																				// 받아와서
-																				// 뿌려주기
+		int questionNo = Integer.parseInt(request.getParameter("questionNo")); // 질문번호 받아와서
+		
 		Question question = questionService.findByQuestionNo(questionNo);
+		
 
 		request.setAttribute("question", question);
 
@@ -42,6 +43,8 @@ public class QuestionDetailController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		
 
 	}
 

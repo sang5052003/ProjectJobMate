@@ -5,7 +5,6 @@ public class Customer {
 	private String name;
 	private String password;
 	
-	
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -25,10 +24,6 @@ public class Customer {
 		this.password = password;
 	}
 	
-	//
-	public String getAdminID(){
-		return Constant.ADMIN_ID;
-	}
 	
 
 }

@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import jobmate.domain.Question;
 import jobmate.domain.Reply;
@@ -33,7 +34,13 @@ public class ReplyRegisterController extends HttpServlet {
 			System.out.println(content);
 			Reply reply = new Reply();
 			reply.setContent(content);
-			reply.setCustomerID("갓기"); // 세션에서 아이디를 가져옴
+			
+			
+			HttpSession session = request.getSession();
+
+			reply.setCustomerID(session.getAttribute("loginUser").toString()); // 세션에서
+																				// 아이디를
+																				// 가져옴
 
 			Question question = questionService.findByQuestionNo(questionNo); // 넘버로
 

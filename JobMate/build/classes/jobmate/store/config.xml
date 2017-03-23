@@ -11,12 +11,10 @@
 	<typeAlias type="jobmate.domain.Customer" alias="Customer"/>
  	<typeAlias type="jobmate.domain.Introduce" alias="Introduce"/>
  	<typeAlias type="jobmate.domain.IntroduceCategory" alias="IntroduceCategory"/>
-  	<typeAlias type="jobmate.domain.MyQuestionScarp" alias="MyQuestionScarp"/>
-  	<typeAlias type="jobmate.domain.MyRecruit" alias="MyRecruit"/>
+  	<typeAlias type="jobmate.domain.Recruit" alias="Recruit"/>
     <typeAlias type="jobmate.domain.Question" alias="Question"/>
     <typeAlias type="jobmate.domain.QuestionCategory" alias="QuestionCategory"/>
     <typeAlias type="jobmate.domain.Reply" alias="Reply"/>
-    <!-- <typeAlias type="jobmate.domain.Constant" alias="Constant"/> -->
 </typeAliases>
 
 	<environments default="development"> <!-- 기본적으로 development를 쓴다 -->
@@ -34,8 +32,8 @@
 	<mappers> <!-- 다른 xml 설정-->
 		<mapper resource="jobmate/store/mapper/CustomerMapper.xml"/>		
 	  	<mapper resource="jobmate/store/mapper/IntroduceMapper.xml"/>
-		<mapper resource="jobmate/store/mapper/MyQuestionScrapMapper.xml"/>
-		<mapper resource="jobmate/store/mapper/MyRecruitMapper.xml"/>
+	 <!--	<mapper resource="jobmate/store/mapper/MyQuestionScarpMapper.xml"/>-->
+	  <mapper resource="jobmate/store/mapper/MyScrapMapper.xml"/>
 		<mapper resource="jobmate/store/mapper/QuestionMapper.xml"/>
 		<mapper resource="jobmate/store/mapper/ReplyMapper.xml"/> 
 	

@@ -24,6 +24,11 @@
 		SELECT REPLY_NO, CONTENT, QUESTION_NO, CUSTOMER_ID
 		FROM REPLY_TB
 	</sql>
+	
+	<select id="readReply" parameterType="int" resultMap="replyMap">
+		<include refid="readReply" />
+		WHERE reply_NO = #{replyNo}	
+	</select>
 
 	<select id="readAll" parameterType="int" resultMap="replyMap">
 		<include refid="readReply" />

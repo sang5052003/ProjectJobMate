@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="jobmate.store.mapper.MyScrapMapper">
+  
+  <resultMap type="Recruit" id="recruitMap">
+  	<result column="recruitID" property="id" />
+  	<result column="name" property="name" />
+  	<result column="title" property="title" />
+  </resultMap>
+  
+  <resultMap type="Question" id="questionMap">
+  	<result column="questionNo" property="question_no" />
+  	<result column="category" property="category" />
+  	<result column="question" property="question" />
+  </resultMap>
+  
+  <insert id="insertMyRecruit" parameterType="map">
+  	INSERT INTO myrecruit_tb(recruitID,name,title,customer_id)
+  	VALUES (#{recruitID},#{name},#{title},#{customerID})
+  </insert>
+  
+  <select id="readMyRecruitByCustomerID" parameterType="String" resultMap="recruitMap">
+  	SELECT recruitID,name,title
+  	FROM Myrecruit_tb 
+  	WHERE customer_id=#{customerID}
+  
+  </select>
+  
+  <select id="existMyRecruit" parameterType="map" resultType="Recruit">
+  SELECT customer_id,recruitID
+  FROM myrecruit_tb
+  WHERE customer_id=#{customerID}
+  AND recruitID=#{recruitID}
+  
+  </select>
+  
+  <delete id="deleteMyRecruit" parameterType="map">
+  DELETE
+  FROM myrecruit_tb
+  WHERE customer_id = #{customerID}
+  AND recruitID = #{recruitID}
+  </delete>
+  
+ 
+   <insert id="insertMyQuestion" parameterType="map">
+   <selectKey keyProperty="myquestion_no" resultType="int" order="BEFORE">
+    select seq_myquestion_no.NEXTVAL FROM DUAL
+  </selectKey>
+  	INSERT INTO myquestion_tb(myquestion_no,customer_id,question_no)
+  	VALUES (#{myquestion_no},#{customerID},#{questionNo})
+  </insert>
+  
+  
+  <select id="readMyQuestionByCustomerID" parameterType="String" resultMap="questionMap">
+  	SELECT 	question_no,category,question
+  	FROM question_tb
+	WHERE question_no IN (SELECT question_no FROM myquestion_tb WHERE customer_id = #{customerID})
+  
+  </select>
+   
+  <select id="existMyQuestion" parameterType="map" resultType="Question">
+  SELECT customer_id,question_no
+  FROM myquestion_tb
+  WHERE customer_id=#{customerID}
+  AND question_no=#{questionNo}
+  
+  </select>
+ 
+  <delete id="deleteMyQuestion" parameterType="map">
+  DELETE
+  FROM myquestion_tb
+  WHERE customer_id = #{customerID}
+  AND question_no = #{questionNo}
+  </delete>
+  
+  
+  
+  </mapper>
